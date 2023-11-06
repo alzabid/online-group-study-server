@@ -95,6 +95,20 @@ async function run() {
       res.send(result);
     });
 
+    app.patch("/submits/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateSubmit = req.body;
+      console.log(updateSubmit);
+      const updateDoc = {
+        $set: {
+          status: updateSubmit.status,
+        },
+      };
+      const result = await submitCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
    
 
 
