@@ -28,6 +28,7 @@ async function run() {
     await client.connect();
 
     const assignmentCollection = client.db("groupStudy").collection("assignments");
+    const submitCollection = client.db("groupStudy").collection("submits");
 
 
     // assignment api
@@ -76,8 +77,14 @@ async function run() {
        res.send(result);
      });
 
-    //  submit api
+    //  submitted api
     
+    app.post("/submits", async (req, res) => {
+      const submit = req.body;
+      console.log(submit);
+      const result = await submitCollection.insertOne(submit);
+      res.send(result);
+    });
 
    
 
