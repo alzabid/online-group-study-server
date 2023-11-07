@@ -77,6 +77,17 @@ async function run() {
        res.send(result);
      });
 
+      app.delete("/assignments/:id", async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await assignmentCollection.deleteOne(query);
+        res.send(result);
+      });
+
+
+
+      
+
     //  submitted api
 
     app.get("/submits", async (req, res) => {
@@ -110,6 +121,7 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       // const options = { upsert: true };
       const updateSubmit = req.body;
+      console.log(updateSubmit)
       const updateDoc = {
         $set: {
           status: updateSubmit.status,
