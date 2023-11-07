@@ -78,7 +78,15 @@ async function run() {
      });
 
     //  submitted api
+
     app.get("/submits", async (req, res) => {
+      const cursor = submitCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+
+    app.get("/mysubmits", async (req, res) => {
       console.log(req.query.email);
       let query = {};
       if (req.query?.email) {
@@ -87,6 +95,8 @@ async function run() {
       const result = await submitCollection.find(query).toArray();
       res.send(result);
     });
+
+    
 
     app.post("/submits", async (req, res) => {
       const submit = req.body;
@@ -98,14 +108,20 @@ async function run() {
     app.patch("/submits/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
+      // const options = { upsert: true };
       const updateSubmit = req.body;
-      console.log(updateSubmit);
       const updateDoc = {
         $set: {
           status: updateSubmit.status,
+          newMarks: updateSubmit.newMarks,
+          feedback: updateSubmit.feedback,
         },
       };
-      const result = await submitCollection.updateOne(filter, updateDoc);
+      const result = await submitCollection.updateOne(
+        filter,
+        updateDoc,
+        // options
+      );
       res.send(result);
     });
 
