@@ -10,7 +10,11 @@ const port = process.env.PORT || 5000;
 //  middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      // "http://localhost:5173",
+      "https://online-group-study-a11.web.app",
+      "online-group-study-a11.firebaseapp.com",
+    ],
     credentials: true,
   })
 );
@@ -113,7 +117,8 @@ async function run() {
 
       const assignment = {
         $set: {
-          name: updateAssignment.name,
+          title: updateAssignment.title,
+          email: updateAssignment.email,
           marks: updateAssignment.marks,
           category: updateAssignment.category,
           date: updateAssignment.date,
